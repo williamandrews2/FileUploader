@@ -14,6 +14,10 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
+// importing flash
+const flash = require("connect-flash");
+app.use(flash());
+
 // locals object used to make the user variable
 // available to all views
 app.use((req, res, next) => {
