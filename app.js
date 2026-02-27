@@ -42,3 +42,5 @@ app.listen(PORT, (error) => {
   }
   console.log(`Express app - listening on port ${PORT}!`);
 });
+
+// passport authentication

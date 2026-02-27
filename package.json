@@ -23,7 +23,6 @@
     "@prisma/client": "^7.4.0",
     "bcryptjs": "^3.0.3",
     "connect-flash": "^0.1.1",
-    "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
@@ -32,7 +31,8 @@
     "pg": "^8.18.0"
   },
   "devDependencies": {
+    "dotenv": "^17.3.1",
     "prettier-plugin-ejs": "^1.0.3",
-    "prisma": "^7.4.0"
+    "prisma": "^7.4.2"
   }
 }
