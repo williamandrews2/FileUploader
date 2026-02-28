@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VaultDrive – Create Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-base:        #0e0f13;
+      --bg-surface:     #161820;
+      --bg-elevated:    #1e2029;
+      --bg-card:        #23262f;
+      --border:         #2e3140;
+      --accent:         #5c6ef8;
+      --accent-glow:    rgba(92, 110, 248, 0.25);
+      --text-primary:   #e8eaf0;
+      --text-secondary: #8b8fa8;
+      --text-muted:     #555970;
+      --danger:         #f04e5e;
+      --danger-bg:      rgba(240, 78, 94, 0.1);
+      --success:        #3ecf8e;
+      --success-bg:     rgba(62, 207, 142, 0.1);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(92,110,248,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: relative;
+      z-index: 10;
+      background: rgba(14,15,19,0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--accent); }
+    .nav-link .material-icons { font-size: 16px; }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 480px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      color: var(--accent);
+    }
+
+    .card-icon .material-icons { font-size: 26px; }
+
+    .card-header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-header p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert .material-icons { font-size: 17px; flex-shrink: 0; }
+
+    .alert-error {
+      background: var(--danger-bg);
+      border: 1px solid rgba(240,78,94,0.3);
+      color: var(--danger);
+    }
+
+    /* ── Two-col row ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    /* ── Form group ── */
+    .form-group { margin-bottom: 1.1rem; }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .input-wrap { position: relative; }
+
+    .input-wrap .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .input-wrap:focus-within .input-icon { color: var(--accent); }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.7rem 0.9rem 0.7rem 2.6rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    input.invalid {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px var(--danger-bg);
+    }
+
+    input.valid {
+      border-color: var(--success);
+    }
+
+    .field-hint {
+      font-size: 0.76rem;
+      margin-top: 0.35rem;
+      color: var(--text-muted);
+      min-height: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .field-hint.error { color: var(--danger); }
+    .field-hint.success { color: var(--success); }
+    .field-hint .material-icons { font-size: 13px; }
+
+    /* ── Toggle password ── */
+    .toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .toggle-pw:hover { color: var(--text-secondary); }
+    .toggle-pw .material-icons { font-size: 18px; pointer-events: none; }
+    .has-toggle input { padding-right: 2.6rem; }
+
+    /* ── Submit ── */
+    .btn-submit {
+      width: 100%;
+      padding: 0.78rem;
+      margin-top: 0.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .btn-submit:hover {
+      background: #6c7ff9;
+      box-shadow: 0 0 28px rgba(92,110,248,0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .card-footer {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .card-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .card-footer a:hover { text-decoration: underline; }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+      .card { padding: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <span class="logo-dot"></span>
+      VaultDrive
+    </a>
+    <a href="/login" class="nav-link">
+      <span class="material-icons">login</span>
+      Sign in
+    </a>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+
+      <div class="card-header">
+        <div class="card-icon">
+          <span class="material-icons">person_add</span>
+        </div>
+        <h1>Create an account</h1>
+        <p>Start storing your files for free</p>
+      </div>
+
+      <% if (errors && errors.length > 0) { %>
+        <% errors.forEach(function(error) { %>
+          <div class="alert alert-error">
+            <span class="material-icons">error_outline</span>
+            <%= error.msg %>
+          </div>
+        <% }) %>
+      <% } %>
+
+      <form action="/register" method="POST" id="registerForm">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <div class="input-wrap">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="John"
+                value="<%= locals.formData ? locals.firstName : '' %>"
+                autocomplete="given-name"
+                required
+              />
+              <span class="material-icons input-icon">badge</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <div class="input-wrap">
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Doe"
+                value="<%= locals.formData ? locals.lastName : '' %>"
+                autocomplete="family-name"
+                required
+              />
+              <span class="material-icons input-icon">badge</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="johndoe"
+              value="<%= locals.formData ? locals.username : '' %>"
+              autocomplete="username"
+              required
+            />
+            <span class="material-icons input-icon">alternate_email</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrap has-toggle">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Min. 8 characters"
+              autocomplete="new-password"
+              required
+            />
+            <span class="material-icons input-icon">lock</span>
+            <button type="button" class="toggle-pw" onclick="togglePassword('password', 'toggleIcon1')" aria-label="Toggle password">
+              <span class="material-icons" id="toggleIcon1">visibility</span>
+            </button>
+          </div>
+          <div class="field-hint" id="passwordHint"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrap has-toggle">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              required
+            />
+            <span class="material-icons input-icon">lock_clock</span>
+            <button type="button" class="toggle-pw" onclick="togglePassword('confirmPassword', 'toggleIcon2')" aria-label="Toggle password">
+              <span class="material-icons" id="toggleIcon2">visibility</span>
+            </button>
+          </div>
+          <div class="field-hint" id="confirmHint"></div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span class="material-icons" style="font-size:18px">person_add</span>
+          Create account
+        </button>
+
+      </form>
+
+      <div class="divider">or</div>
+
+      <div class="card-footer">
+        Already have an account? <a href="/login">Sign in</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>Built with Express · Passport · Prisma &nbsp;|&nbsp; The Odin Project</footer>
+
+  <script>
+    function togglePassword(fieldId, iconId) {
+      const input = document.getElementById(fieldId);
+      const icon  = document.getElementById(iconId);
+      input.type  = input.type === 'password' ? 'text' : 'password';
+      icon.textContent = input.type === 'password' ? 'visibility' : 'visibility_off';
+    }
+
+    // Live password strength hint
+    const passwordInput     = document.getElementById('password');
+    const confirmInput      = document.getElementById('confirmPassword');
+    const passwordHint      = document.getElementById('passwordHint');
+    const confirmHint       = document.getElementById('confirmHint');
+
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+      if (val.length === 0) {
+        passwordHint.innerHTML = '';
+        passwordInput.classList.remove('valid', 'invalid');
+      } else if (val.length < 8) {
+        passwordHint.innerHTML = '<span class="material-icons">close</span> At least 8 characters required';
+        passwordHint.className = 'field-hint error';
+        passwordInput.classList.add('invalid');
+        passwordInput.classList.remove('valid');
+      } else {
+        passwordHint.innerHTML = '<span class="material-icons">check</span> Looks good!';
+        passwordHint.className = 'field-hint success';
+        passwordInput.classList.add('valid');
+        passwordInput.classList.remove('invalid');
+      }
+      // Re-check confirm if already typed
+      if (confirmInput.value.length > 0) checkConfirm();
+    });
+
+    confirmInput.addEventListener('input', checkConfirm);
+
+    function checkConfirm() {
+      if (confirmInput.value.length === 0) {
+        confirmHint.innerHTML = '';
+        confirmInput.classList.remove('valid', 'invalid');
+        return;
+      }
+      if (confirmInput.value !== passwordInput.value) {
+        confirmHint.innerHTML = '<span class="material-icons">close</span> Passwords do not match';
+        confirmHint.className = 'field-hint error';
+        confirmInput.classList.add('invalid');
+        confirmInput.classList.remove('valid');
+      } else {
+        confirmHint.innerHTML = '<span class="material-icons">check</span> Passwords match';
+        confirmHint.className = 'field-hint success';
+        confirmInput.classList.add('valid');
+        confirmInput.classList.remove('invalid');
+      }
+    }
+  </script>
+
+</body>
+</html>
