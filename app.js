@@ -2,15 +2,16 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const path = require("node:path");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const passport = require("./config/passport");
 const session = require("express-session");
+// const LocalStrategy = require("passport-local").Strategy;
 // const prisma = require("./prisma/prismaClient");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,5 +43,3 @@ app.listen(PORT, (error) => {
   }
   console.log(`Express app - listening on port ${PORT}!`);
 });
-
-// passport authentication
