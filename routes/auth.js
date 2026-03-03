@@ -8,6 +8,9 @@ authRouter.get("/login", authController.loginGet);
 // POST login page
 authRouter.post("/login", authController.loginPost);
 
+// GET logout the user
+authRouter.get("/logout", authController.logoutGet);
+
 // GET register page
 authRouter.get("/register", authController.registerGet);
 

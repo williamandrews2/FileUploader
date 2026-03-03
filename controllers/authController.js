@@ -15,6 +15,16 @@ exports.loginPost = passport.authenticate("local", {
   failureFlash: true,
 });
 
+// GET logout the user
+exports.logoutGet = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
 // GET register page
 exports.registerGet = (req, res) => {
   res.render("register", { errors: [] });
