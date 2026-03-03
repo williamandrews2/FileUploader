@@ -74,11 +74,9 @@ exports.registerPost = async (req, res) => {
       });
     }
 
-    console.log("Hashing password");
     // hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    console.log("Attemping db insert...");
     // insert new user into the database
     const newUser = await prisma.user.create({
       data: {
@@ -89,7 +87,6 @@ exports.registerPost = async (req, res) => {
       },
     });
 
-    console.log("Logging user in...");
     // log the user in immediately after registration
     req.login(newUser, (err) => {
       if (err) {
@@ -98,7 +95,6 @@ exports.registerPost = async (req, res) => {
       res.redirect("/");
     });
   } catch (error) {
-    console.log("There was an error with POST on register!");
     console.error(error);
     res.render("register", { errors: ["Error creating account!"] });
   }
