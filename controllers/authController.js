@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 
 // GET login page
 exports.loginGet = (req, res) => {
-  res.render("login", { messages: req.flash("error") });
+  res.render("login", { messages: req.flash("error"), title: "Login" });
 };
 
 // POST login page
@@ -27,7 +27,7 @@ exports.logoutGet = (req, res, next) => {
 
 // GET register page
 exports.registerGet = (req, res) => {
-  res.render("register", { errors: [] });
+  res.render("register", { errors: [], title: "Register" });
 };
 
 // POST register a new user
@@ -96,6 +96,9 @@ exports.registerPost = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.render("register", { errors: ["Error creating account!"] });
+    res.render("register", {
+      errors: ["Error creating account!"],
+      title: "Register",
+    });
   }
 };

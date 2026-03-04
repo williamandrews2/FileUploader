@@ -1,4 +1,4 @@
 // GET homepage
 exports.homepageGet = (req, res) => {
-  res.render("index", { user: req.user });
+  res.render("home", { user: req.user, title: "Home" });
 };
