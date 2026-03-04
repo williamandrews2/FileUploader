@@ -34,6 +34,8 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Background grid ── */
@@ -332,7 +334,7 @@ h1 span {
   position: relative;
   z-index: 1;
   max-width: 640px;
-  margin: 0 auto 5rem;
+  margin: 5rem auto;
   padding: 0 1.5rem;
 }
 
@@ -341,6 +343,7 @@ h1 span {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 2rem;
+  min-width: 75vw;
 }
 
 .upload-card h3 {
@@ -436,7 +439,6 @@ h1 span {
 
 /* ── Footer ── */
 footer {
-  position: relative;
   z-index: 1;
   border-top: 1px solid var(--border);
   padding: 2rem 1.5rem;
