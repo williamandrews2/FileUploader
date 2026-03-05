@@ -334,6 +334,7 @@ h1 span {
   position: relative;
   z-index: 1;
   max-width: 640px;
+  min-width: 65vw;
   margin: 5rem auto;
   padding: 0 1.5rem;
 }
@@ -343,7 +344,6 @@ h1 span {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 2rem;
-  min-width: 75vw;
 }
 
 .upload-card h3 {
