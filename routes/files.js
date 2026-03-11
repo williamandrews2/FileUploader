@@ -2,12 +2,18 @@ const { Router } = require("express");
 const filesRouter = Router();
 const filesController = require("../controllers/filesController");
 const { isAuthenticated } = require("../middleware/auth");
+const upload = require("../middleware/upload");
 
 // GET upload a file
 filesRouter.get("/upload", isAuthenticated, filesController.uploadGet);
 
 // POST upload a file
-filesRouter.post("/upload", isAuthenticated, filesController.uploadPost);
+filesRouter.post(
+  "/upload",
+  isAuthenticated,
+  upload.single("file"),
+  filesController.uploadPost,
+);
 
 // GET view a file's details
 filesRouter.get(

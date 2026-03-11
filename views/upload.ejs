@@ -1,30 +1,36 @@
 <div class="page">
-    <!-- UPLOAD DEMO CARD -->
   <div class="demo-section">
     <div class="upload-card">
       <h3>
-        <span class="material-icons" style="color: var(--accent); font-size:20px">drive_folder_upload</span>
+        <span
+          class="material-icons"
+          style="color: var(--accent); font-size: 20px"
+          >drive_folder_upload</span
+        >
         Upload a file
       </h3>
+      <!-- multipart.form-data is required for multer to receive the file! -->
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div
+          class="upload-drop"
+          id="dropZone"
+          onclick="document.getElementById('fileInput').click()"
+        >
+          <span class="material-icons">cloud_upload</span>
+          <p>Drag & drop files here, or <span>browse</span></p>
+          <small>Max 10MB · PNG, JPG, PDF, DOCX and more</small>
+        </div>
+        <input type="file" name="file" id="fileInput" style="display: none" />
 
-      <div class="upload-drop" onclick="document.getElementById('fileInput').click()">
-        <span class="material-icons">cloud_upload</span>
-        <p>Drag & drop files here, or <span>browse</span></p>
-        <small>Max 10MB · PNG, JPG, PDF, DOCX and more</small>
-      </div>
-      <input type="file" id="fileInput" style="display:none"/>
-
-      <% if (user) { %>
-        <a href="/upload" class="btn btn-primary" style="width:100%; justify-content:center;">
-          <span class="material-icons" style="font-size:16px">upload</span>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="width: 100%; justify-content: center; margin-top: 1.25rem"
+        >
+          <span class="material-icons" style="font-size: 16px">upload</span>
           Upload now
-        </a>
-      <% } else { %>
-        <a href="/register" class="btn btn-primary" style="width:100%; justify-content:center;">
-          <span class="material-icons" style="font-size:16px">person_add</span>
-          Sign up to upload
-        </a>
-      <% } %>
+        </button>
+      </form>
     </div>
   </div>
 </div>

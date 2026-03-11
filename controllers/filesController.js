@@ -4,7 +4,11 @@ exports.uploadGet = (req, res) => {
 };
 
 // POST to upload file
-exports.uploadPost = (req, res) => {};
+exports.uploadPost = async (req, res) => {
+  const file = req.file; // multer will attach the file here
+  console.log(file.originalname); // testing output of the file
+  res.redirect("/dashboard");
+};
 
 // GET to view a file's details
 exports.fileDetailsGet = (req, res) => {};
