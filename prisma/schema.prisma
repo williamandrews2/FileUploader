@@ -21,6 +21,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   files File[] 
+  folders Folder[]
 }
 
 model File {
@@ -34,4 +35,16 @@ model File {
   updatedAt DateTime @updatedAt
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  folderId Int? // optional, since we can have a file with no folder (root directory)
+  folder Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
+}
+
+model Folder {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  files File[]
 }
