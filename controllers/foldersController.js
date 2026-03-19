@@ -1,3 +1,5 @@
+const prisma = require("../prisma/prismaClient");
+
 exports.createFolderGet = (req, res) => {
   res.render("createFolder", { title: "Create Folder", errors: [] });
 };
@@ -29,8 +31,12 @@ exports.createFolderPost = async (req, res) => {
         userId: req.user.id,
       },
     });
+
+    // redirect to the dashboard on success
+    res.redirect("/dashboard");
   } catch (error) {
     console.error(error);
+    res.redirect("/");
   }
 };
 

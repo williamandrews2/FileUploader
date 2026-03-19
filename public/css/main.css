@@ -445,6 +445,7 @@ footer {
   text-align: center;
   font-size: 0.82rem;
   color: var(--text-muted);
+  margin-top: auto;
 }
 
 footer a {
@@ -460,6 +461,17 @@ footer a:hover {
   from {
     opacity: 0;
     transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -486,7 +498,6 @@ footer a:hover {
     AUTH PAGES (Login / Register)
 ===================================================== */
 
-/* Centered auth layout */
 .page {
   position: relative;
   z-index: 1;
@@ -497,7 +508,6 @@ footer a:hover {
   padding: 3rem 1.5rem;
 }
 
-/* Card */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -535,6 +545,7 @@ footer a:hover {
   font-weight: 600;
   letter-spacing: -0.5px;
   margin-bottom: 0.35rem;
+  animation: none;
 }
 
 .card-header p {
@@ -542,7 +553,6 @@ footer a:hover {
   color: var(--text-secondary);
 }
 
-/* Error alert */
 .alert-error {
   display: flex;
   align-items: center;
@@ -561,7 +571,6 @@ footer a:hover {
   flex-shrink: 0;
 }
 
-/* Form */
 .form-group {
   margin-bottom: 1.1rem;
 }
@@ -612,11 +621,10 @@ input:focus {
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
-.input-wrap:focus-within .material-icons {
+.input-wrap:focus-within .input-icon {
   color: var(--accent);
 }
 
-/* Toggle password */
 .toggle-pw {
   position: absolute;
   right: 12px;
@@ -645,7 +653,6 @@ input:focus {
   padding-right: 2.6rem;
 }
 
-/* Submit button */
 .btn-submit {
   width: 100%;
   padding: 0.78rem;
@@ -679,7 +686,6 @@ input:focus {
   transform: translateY(0);
 }
 
-/* Divider */
 .divider {
   display: flex;
   align-items: center;
@@ -713,18 +719,6 @@ input:focus {
   text-decoration: underline;
 }
 
-/* Animation */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* =====================================================
    REGISTER-SPECIFIC STYLES
 ===================================================== */
@@ -733,14 +727,12 @@ input:focus {
   max-width: 480px;
 }
 
-/* Two-column name row */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.85rem;
 }
 
-/* Validation states */
 input.invalid {
   border-color: var(--danger);
   box-shadow: 0 0 0 3px rgba(240, 78, 94, 0.15);
@@ -772,9 +764,285 @@ input.valid {
   font-size: 13px;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .form-row {
     grid-template-columns: 1fr;
   }
+}
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  flex: 1;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.dashboard-title h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  animation: none;
+}
+
+.dashboard-title p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-header-left .material-icons {
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.section-heading {
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.section-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 0.1rem 0.6rem;
+  font-family: "Space Mono", monospace;
+}
+
+/* ── Folders grid ── */
+.folders-section {
+  margin-bottom: 3rem;
+}
+
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.folder-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition:
+    border-color 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.folder-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(92, 110, 248, 0.15);
+}
+
+.folder-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.folder-card-icon .material-icons {
+  font-size: 22px;
+}
+
+.folder-card-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.folder-card-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: "Space Mono", monospace;
+}
+
+.folder-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* ── Icon buttons ── */
+.icon-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+.icon-btn.danger:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.icon-btn .material-icons {
+  font-size: 16px;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.empty-state .material-icons {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Files list ── */
+.files-section {
+  margin-bottom: 3rem;
+}
+
+.files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.file-row:hover {
+  border-color: var(--accent);
+}
+
+.file-row-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.file-row-icon .material-icons {
+  font-size: 18px;
+}
+
+.file-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-row-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-row-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: "Space Mono", monospace;
+  margin-top: 2px;
+}
+
+.file-row-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ── Dashboard divider ── */
+.dash-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 3rem;
 }
