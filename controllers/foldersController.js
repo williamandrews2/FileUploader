@@ -25,7 +25,7 @@ exports.createFolderPost = async (req, res) => {
     }
 
     // post the folder to prisma
-    const newFolder = prisma.folder.create({
+    const newFolder = await prisma.folder.create({
       data: {
         name: folderName,
         userId: req.user.id,
