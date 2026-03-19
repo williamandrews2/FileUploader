@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VaultDrive – New Folder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+
+  <!-- PAGE -->
+  <div class="page">
+    <div class="card">
+
+      <div class="card-header">
+        <div class="card-icon">
+          <span class="material-icons">create_new_folder</span>
+        </div>
+        <h1>New Folder</h1>
+        <p>Organize your files into a folder</p>
+      </div>
+
+      <% if (locals.errors && locals.errors.length > 0) { %>
+        <% errors.forEach(function(error) { %>
+          <div class="alert-error">
+            <span class="material-icons">error_outline</span>
+            <%= error %>
+          </div>
+        <% }) %>
+      <% } %>
+
+      <form action="/folders/new" method="POST">
+
+        <div class="form-group">
+          <label for="folderName">Folder Name</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="folderName"
+              name="folderName"
+              placeholder="e.g. Documents, Photos..."
+              value="<%= locals.folderName || '' %>"
+              autocomplete="off"
+              required
+            />
+            <span class="material-icons input-icon">folder</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span class="material-icons" style="font-size:18px">create_new_folder</span>
+          Create Folder
+        </button>
+
+      </form>
+
+      <div class="divider">or</div>
+
+      <div class="card-footer">
+        <a href="/dashboard">Cancel and go back</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
