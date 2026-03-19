@@ -34,10 +34,12 @@ const PORT = process.env.PORT || 3030;
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const filesRouter = require("./routes/files");
+const foldersRouter = require("./routes/folders");
 
 app.use("/", indexRouter);
 app.use("/", authRouter);
 app.use("/", filesRouter);
+app.use("/", foldersRouter);
 
 // start the server
 app.listen(PORT, (error) => {
