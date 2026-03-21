@@ -52,10 +52,38 @@ exports.uploadPost = async (req, res) => {
 };
 
 // GET to view a file's details
-exports.fileDetailsGet = (req, res) => {};
+exports.fileDetailsGet = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const user = req.user;
+
+    // look for the file in the database
+    const file = await prisma.file.findUnique({
+      where: { id: id },
+    });
+
+    // check if a file returned
+    if (!file) {
+      return res.redirect("/dashboard");
+    }
+
+    // render the page with file details
+    res.render("fileDetails", { file, user: user, title: "File Details" });
+  } catch (error) {
+    console.error(error);
+    // TODO: Change redirect on file view error (file not found, error 404 page, etc.)
+    res.redirect("/dashboard");
+  }
+};
 
 // download a file
-exports.fileDownload = (req, res) => {};
+exports.fileDownload = (req, res) => {
+  // This is slightly more involved. Since your files
+  // are stored in Supabase, you actually already have
+  // everything you need — the path field on your File model
+  // stores the public URL. So the simplest approach is to
+  // just redirect the user directly to that URL: res.redirect(file.path);
+};
 
 // POST delete a file
 exports.fileDelete = (req, res) => {};

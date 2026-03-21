@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VaultDrive – File Details</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+  <div class="file-details-page">
+
+    <!-- Back -->
+    <a href="/dashboard" class="back-link">
+      <span class="material-icons">arrow_back</span>
+      Back to Dashboard
+    </a>
+
+    <!-- File header -->
+    <div class="file-header-card">
+      <div class="file-type-icon">
+        <%
+          const mime = file.mimeType || '';
+          let icon = 'insert_drive_file';
+          if (mime.startsWith('image/')) icon = 'image';
+          else if (mime === 'application/pdf') icon = 'picture_as_pdf';
+          else if (mime.includes('word') || mime.includes('document')) icon = 'description';
+          else if (mime.includes('spreadsheet') || mime.includes('excel')) icon = 'table_chart';
+          else if (mime.startsWith('video/')) icon = 'videocam';
+          else if (mime.startsWith('audio/')) icon = 'audio_file';
+          else if (mime.includes('zip') || mime.includes('compressed')) icon = 'folder_zip';
+        %>
+        <span class="material-icons"><%= icon %></span>
+      </div>
+      <div class="file-header-info">
+        <h1><%= file.fileName %></h1>
+        <div class="file-mime"><%= file.mimeType %></div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="file-actions">
+      <a href="/files/<%= file.id %>/download" class="btn btn-primary">
+        <span class="material-icons" style="font-size:16px">download</span>
+        Download
+      </a>
+      <a href="/dashboard" class="btn btn-ghost">
+        <span class="material-icons" style="font-size:16px">dashboard</span>
+        Dashboard
+      </a>
+    </div>
+
+    <!-- Details -->
+    <div class="details-card">
+      <div class="details-card-header">
+        <span class="material-icons">info</span>
+        <span>File Information</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">File Name</span>
+        <span class="detail-value"><%= file.fileName %></span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Stored As</span>
+        <span class="detail-value"><%= file.storedName %></span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">File Size</span>
+        <span class="detail-value highlight">
+          <% if (file.fileSize < 1024) { %>
+            <%= file.fileSize %> B
+          <% } else if (file.fileSize < 1024 * 1024) { %>
+            <%= (file.fileSize / 1024).toFixed(1) %> KB
+          <% } else { %>
+            <%= (file.fileSize / (1024 * 1024)).toFixed(2) %> MB
+          <% } %>
+        </span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Type</span>
+        <span class="detail-value"><%= file.mimeType %></span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Uploaded</span>
+        <span class="detail-value">
+          <%= new Date(file.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+        </span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Last Updated</span>
+        <span class="detail-value">
+          <%= new Date(file.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+        </span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Storage URL</span>
+        <span class="detail-value" style="font-size: 0.75rem;">
+          <a href="<%= file.path %>" target="_blank" style="color: var(--accent); text-decoration: none;">
+            View in Supabase
+          </a>
+        </span>
+      </div>
+    </div>
+
+    <!-- Delete section -->
+    <div class="delete-section">
+      <div class="delete-section-text">
+        <strong>Delete this file</strong>
+        <p>This will permanently remove the file from storage and cannot be undone.</p>
+      </div>
+      <form action="/files/<%= file.id %>/delete" method="POST" style="margin: 0;">
+        <button type="submit" class="btn btn-danger">
+          <span class="material-icons" style="font-size:16px">delete</span>
+          Delete File
+        </button>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>
