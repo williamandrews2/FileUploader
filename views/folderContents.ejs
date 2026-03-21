@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VaultDrive – <%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+  <div class="folder-page">
+
+    <!-- Back -->
+    <a href="/dashboard" class="back-link">
+      <span class="material-icons">arrow_back</span>
+      Back to Dashboard
+    </a>
+
+    <!-- Folder header -->
+    <div class="folder-header">
+      <div class="folder-header-left">
+        <div class="folder-header-icon">
+          <span class="material-icons">folder_open</span>
+        </div>
+        <div class="folder-header-info">
+          <h1><%= folder.name %></h1>
+          <p>Created <%= new Date(folder.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+        </div>
+      </div>
+      <div class="folder-header-actions">
+        <a href="/upload" class="btn btn-primary">
+          <span class="material-icons" style="font-size:16px">upload_file</span>
+          Upload File
+        </a>
+        <a href="/folders/<%= folder.id %>/edit" class="btn btn-ghost">
+          <span class="material-icons" style="font-size:16px">edit</span>
+          Rename
+        </a>
+        <form action="/folders/<%= folder.id %>/delete" method="POST" style="margin:0;" class="delete-form">
+          <button type="submit" class="btn btn-ghost" style="color: var(--danger); border-color: rgba(240,78,94,0.4);">
+            <span class="material-icons" style="font-size:16px">delete</span>
+            Delete Folder
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Files section -->
+    <div class="files-section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="material-icons">insert_drive_file</span>
+          <span class="section-heading">Files</span>
+        </div>
+        <span class="section-count"><%= files.length %></span>
+      </div>
+
+      <% if (files.length === 0) { %>
+        <div class="empty-state">
+          <span class="material-icons">upload_file</span>
+          <p>No files in this folder yet</p>
+          <a href="/upload" class="btn btn-ghost">
+            <span class="material-icons" style="font-size:16px">upload</span>
+            Upload a file
+          </a>
+        </div>
+      <% } else { %>
+        <div class="files-list">
+          <% files.forEach(function(file) { %>
+            <div class="file-row">
+              <div class="file-row-icon">
+                <%
+                  const mime = file.mimeType || '';
+                  let icon = 'insert_drive_file';
+                  if (mime.startsWith('image/')) icon = 'image';
+                  else if (mime === 'application/pdf') icon = 'picture_as_pdf';
+                  else if (mime.includes('word') || mime.includes('document')) icon = 'description';
+                  else if (mime.includes('spreadsheet') || mime.includes('excel')) icon = 'table_chart';
+                  else if (mime.startsWith('video/')) icon = 'videocam';
+                  else if (mime.startsWith('audio/')) icon = 'audio_file';
+                  else if (mime.includes('zip') || mime.includes('compressed')) icon = 'folder_zip';
+                %>
+                <span class="material-icons"><%= icon %></span>
+              </div>
+              <div class="file-row-info">
+                <div class="file-row-name"><%= file.fileName %></div>
+                <div class="file-row-meta">
+                  <% if (file.fileSize < 1024) { %>
+                    <%= file.fileSize %> B
+                  <% } else if (file.fileSize < 1024 * 1024) { %>
+                    <%= (file.fileSize / 1024).toFixed(1) %> KB
+                  <% } else { %>
+                    <%= (file.fileSize / (1024 * 1024)).toFixed(2) %> MB
+                  <% } %>
+                  &nbsp;·&nbsp; <%= file.mimeType %>
+                  &nbsp;·&nbsp; <%= new Date(file.createdAt).toLocaleDateString() %>
+                </div>
+              </div>
+              <div class="file-row-actions">
+                <a href="/files/<%= file.id %>" class="icon-btn" title="Details">
+                  <span class="material-icons">info</span>
+                </a>
+                <a href="/files/<%= file.id %>/download" class="icon-btn" title="Download" target="_blank">
+                  <span class="material-icons">download</span>
+                </a>
+                <form action="/files/<%= file.id %>/delete" method="POST" style="margin:0;" class="delete-form">
+                  <button type="submit" class="icon-btn danger" title="Delete">
+                    <span class="material-icons">delete</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+  <script src="/js/confirm-delete.js"></script>
+
+</body>
+</html>

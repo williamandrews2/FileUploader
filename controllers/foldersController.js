@@ -40,10 +40,62 @@ exports.createFolderPost = async (req, res) => {
   }
 };
 
-exports.viewFolder = (req, res) => {};
+exports.viewFolder = async (req, res) => {
+  try {
+    const folderId = parseInt(req.params.id);
+    const folder = await prisma.folder.findUnique({
+      where: { id: folderId, userId: req.user.id },
+    });
 
-exports.updateFolderGet = (req, res) => {};
+    // ensure there is a folder that was returned
+    if (!folder) {
+      return res.redirect("/dashboard");
+    }
 
-exports.updateFolderPost = (req, res) => {};
+    // get all the files that are in this folder that belong to the user
+    const files = await prisma.file.findMany({
+      where: { folderId: folderId, userId: req.user.id },
+    });
+
+    res.render("folderContents", {
+      title: folder.name,
+      folder,
+      files,
+      user: req.user,
+    });
+  } catch (error) {
+    console.error(error);
+    res.redirect("/dashboard");
+  }
+};
+
+exports.updateFolderGet = async (req, res) => {
+  const folder = await prisma.folder.findUnique({
+    where: { id: parseInt(req.params.id) },
+  });
+  res.render("editFolder", { folder, errors: [], title: "Update Folder" });
+};
+
+exports.updateFolderPost = async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { folderName } = req.body;
+  const errors = [];
+
+  if (!folderName || folderName.trim() === "") {
+    errors.push("Folder name is required!");
+  }
+
+  if (errors.length > 0) {
+    const folder = await prisma.folder.findUnique({ where: { id } });
+    return res.render("editFolder", { folder, errors, folderName });
+  }
+
+  await prisma.folder.update({
+    where: { id },
+    data: { name: folderName },
+  });
+
+  res.redirect(`/folders/${id}`);
+};
 
 exports.deleteFolder = (req, res) => {};

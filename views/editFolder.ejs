@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VaultDrive – Rename Folder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+
+      <div class="card-header">
+        <div class="card-icon">
+          <span class="material-icons">drive_file_rename_outline</span>
+        </div>
+        <h1>Rename Folder</h1>
+        <p>Update the name for <strong style="color: var(--text-primary);"><%= folder.name %></strong></p>
+      </div>
+
+      <% if (locals.errors && locals.errors.length > 0) { %>
+        <% errors.forEach(function(error) { %>
+          <div class="alert-error">
+            <span class="material-icons">error_outline</span>
+            <%= error %>
+          </div>
+        <% }) %>
+      <% } %>
+
+      <form action="/folders/<%= folder.id %>/edit" method="POST">
+
+        <div class="form-group">
+          <label for="folderName">Folder Name</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="folderName"
+              name="folderName"
+              value="<%= locals.folderName || folder.name %>"
+              autocomplete="off"
+              required
+            />
+            <span class="material-icons input-icon">folder</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span class="material-icons" style="font-size:18px">save</span>
+          Save Changes
+        </button>
+
+      </form>
+
+      <div class="divider">or</div>
+
+      <div class="card-footer">
+        <a href="/folders/<%= folder.id %>">Cancel and go back</a>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
