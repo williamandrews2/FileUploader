@@ -77,12 +77,18 @@ exports.fileDetailsGet = async (req, res) => {
 };
 
 // download a file
-exports.fileDownload = (req, res) => {
-  // This is slightly more involved. Since your files
-  // are stored in Supabase, you actually already have
-  // everything you need — the path field on your File model
-  // stores the public URL. So the simplest approach is to
-  // just redirect the user directly to that URL: res.redirect(file.path);
+exports.fileDownload = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const file = await prisma.file.findUnique({
+      where: { id: id },
+    });
+    console.log(file.path);
+    res.redirect(file.path);
+  } catch (error) {
+    console.error(error);
+    res.redirect(`/${parseInt(req.params.id)}/details`);
+  }
 };
 
 // POST delete a file
