@@ -117,13 +117,13 @@
                 </div>
               </div>
               <div class="file-row-actions">
-                <a href="/files/<%= file.id %>" class="icon-btn" title="Details">
+                <a href="/<%= file.id %>/details" class="icon-btn" title="Details">
                   <span class="material-icons">info</span>
                 </a>
-                <a href="/files/<%= file.id %>/download" class="icon-btn" title="Download">
+                <a href="/<%= file.id %>/download" class="icon-btn" title="Download">
                   <span class="material-icons">download</span>
                 </a>
-                <form action="/files/<%= file.id %>/delete" method="POST" style="margin:0;">
+                <form action="/<%= file.id %>/delete" method="POST" style="margin:0;">
                   <button type="submit" class="icon-btn danger" title="Delete">
                     <span class="material-icons">delete</span>
                   </button>
