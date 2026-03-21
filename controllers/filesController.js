@@ -105,7 +105,6 @@ exports.fileDelete = async (req, res) => {
       where: { id: id },
     });
 
-    // TODO: add a delete confirmation here:
     res.redirect("/dashboard");
   } catch (error) {
     console.error(error);

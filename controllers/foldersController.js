@@ -1,4 +1,5 @@
 const prisma = require("../prisma/prismaClient");
+const supabase = require("../supabase/supabaseClient");
 
 exports.createFolderGet = (req, res) => {
   res.render("createFolder", { title: "Create Folder", errors: [] });
@@ -98,4 +99,30 @@ exports.updateFolderPost = async (req, res) => {
   res.redirect(`/folders/${id}`);
 };
 
-exports.deleteFolder = (req, res) => {};
+exports.deleteFolder = async (req, res) => {
+  try {
+    const folderId = parseInt(req.params.id);
+
+    // grab all the files in this folder since they will also be deleted
+    const files = await prisma.file.findMany({
+      where: { folderId: folderId },
+    });
+
+    // delete the files in the supabase storage first
+    if (files.length > 0) {
+      // create an array of the stored names, since this is how we will delete the files
+      const storedNames = files.map((file) => file.storedName);
+      await supabase.storage.from("uploads").remove(storedNames);
+    }
+
+    // delete the folder in prisma db second
+    await prisma.folder.delete({
+      where: { id: folderId },
+    });
+
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.error(error);
+    res.redirect("/dashboard");
+  }
+};
