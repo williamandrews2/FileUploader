@@ -28,7 +28,6 @@ exports.uploadPost = async (req, res) => {
       console.error(error);
       return res.redirect("/dashboard");
     }
-    console.log("Upload success!");
 
     // insert into the db
     const newFile = await prisma.file.create({
@@ -46,8 +45,7 @@ exports.uploadPost = async (req, res) => {
     res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
-    // TODO: Change this later to show an error message about the file upload.
-    res.redirect("/dashboard");
+    res.redirect("/upload");
   }
 };
 
@@ -71,7 +69,6 @@ exports.fileDetailsGet = async (req, res) => {
     res.render("fileDetails", { file, user: user, title: "File Details" });
   } catch (error) {
     console.error(error);
-    // TODO: Change redirect on file view error (file not found, error 404 page, etc.)
     res.redirect("/dashboard");
   }
 };

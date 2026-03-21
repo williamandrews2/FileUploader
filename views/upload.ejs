@@ -34,3 +34,13 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.querySelector("form").addEventListener("submit", (e) => {
+    const fileInput = document.getElementById("fileInput");
+    if (!fileInput || fileInput.files.length === 0) {
+      e.preventDefault();
+      alert("Please select a file before uploading!");
+    }
+  });
+</script>
