@@ -106,7 +106,18 @@
           <% files.forEach(function(file) { %>
             <div class="file-row" onclick="window.location='/<%= file.id %>/details'">
               <div class="file-row-icon">
-                <span class="material-icons">insert_drive_file</span>
+                <%
+                  const mime = file.mimeType || '';
+                  let icon = 'insert_drive_file';
+                  if (mime.startsWith('image/')) icon = 'image';
+                  else if (mime === 'application/pdf') icon = 'picture_as_pdf';
+                  else if (mime.includes('word') || mime.includes('document')) icon = 'description';
+                  else if (mime.includes('spreadsheet') || mime.includes('excel')) icon = 'table_chart';
+                  else if (mime.startsWith('video/')) icon = 'videocam';
+                  else if (mime.startsWith('audio/')) icon = 'audio_file';
+                  else if (mime.includes('zip') || mime.includes('compressed')) icon = 'folder_zip';
+                %>
+                <span class="material-icons"><%= icon %></span>
               </div>
               <div class="file-row-info">
                 <div class="file-row-name"><%= file.fileName %></div>
