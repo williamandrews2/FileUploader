@@ -62,7 +62,7 @@
                 <%= new Date(folder.createdAt).toLocaleDateString() %>
               </div>
               <div class="folder-card-actions">
-                <a href="/folders/<%= folder.id %>" class="icon-btn" title="Open in new tab" target="_blank">
+                <a href="/folders/<%= folder.id %>" target="_blank" class="icon-btn" title="Open in new tab" >
                   <span class="material-icons">open_in_new</span>
                 </a>
                 <a href="/folders/<%= folder.id %>/edit" class="icon-btn" title="Rename">

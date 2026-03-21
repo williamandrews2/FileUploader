@@ -10,7 +10,7 @@ exports.loginGet = (req, res) => {
 
 // POST login page
 exports.loginPost = passport.authenticate("local", {
-  successRedirect: "/",
+  successRedirect: "/dashboard",
   failureRedirect: "/login",
   failureFlash: true,
 });
@@ -92,7 +92,7 @@ exports.registerPost = async (req, res) => {
       if (err) {
         return next(err);
       }
-      res.redirect("/");
+      res.redirect("/dashboard");
     });
   } catch (error) {
     console.error(error);

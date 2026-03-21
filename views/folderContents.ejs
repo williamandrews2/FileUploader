@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="folder-header-actions">
-        <a href="/upload" class="btn btn-primary">
+        <a href="/upload?folderId=<%= folder.id %>" class="btn btn-primary">
           <span class="material-icons" style="font-size:16px">upload_file</span>
           Upload File
         </a>
@@ -60,7 +60,7 @@
         <div class="empty-state">
           <span class="material-icons">upload_file</span>
           <p>No files in this folder yet</p>
-          <a href="/upload" class="btn btn-ghost">
+          <a href="/upload?folderId=<%= folder.id %>" class="btn btn-ghost">
             <span class="material-icons" style="font-size:16px">upload</span>
             Upload a file
           </a>
@@ -98,13 +98,13 @@
                 </div>
               </div>
               <div class="file-row-actions">
-                <a href="/files/<%= file.id %>" class="icon-btn" title="Details">
+                <a href="/<%= file.id %>/details" class="icon-btn" title="Details">
                   <span class="material-icons">info</span>
                 </a>
-                <a href="/files/<%= file.id %>/download" class="icon-btn" title="Download" target="_blank">
+                <a href="/<%= file.id %>/download" class="icon-btn" title="Download" target="_blank">
                   <span class="material-icons">download</span>
                 </a>
-                <form action="/files/<%= file.id %>/delete" method="POST" style="margin:0;" class="delete-form">
+                <form action="/<%= file.id %>/delete" method="POST" style="margin:0;" class="delete-form">
                   <button type="submit" class="icon-btn danger" title="Delete">
                     <span class="material-icons">delete</span>
                   </button>

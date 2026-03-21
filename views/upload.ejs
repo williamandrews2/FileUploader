@@ -21,7 +21,11 @@
           <small>Max 10MB · PNG, JPG, PDF, DOCX and more</small>
         </div>
         <input type="file" name="file" id="fileInput" style="display: none" />
-
+        <input
+          type="hidden"
+          name="folderId"
+          value="<%= locals.folderId || '' %>"
+        />
         <button
           type="submit"
           class="btn btn-primary"

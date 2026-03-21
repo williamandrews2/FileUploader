@@ -3,7 +3,10 @@ const supabase = require("../supabase/supabaseClient");
 
 // GET to upload a file
 exports.uploadGet = (req, res) => {
-  res.render("upload", { title: "Upload" });
+  res.render("upload", {
+    title: "Upload",
+    folderId: req.query.folderId || null,
+  });
 };
 
 // POST to upload file
@@ -11,18 +14,17 @@ exports.uploadPost = async (req, res) => {
   try {
     const file = req.file; // multer will attach the file here
     const filePath = `${req.user.id}-${Date.now()}-${file.originalname}`;
+    const folderId = req.body.folderId ? parseInt(req.body.folderId) : null;
 
     // upload call:
     const { data: uploadData, error } = await supabase.storage
       .from("uploads")
       .upload(filePath, file.buffer, { contentType: file.mimetype });
-    console.log("Upload call initiated...");
 
     // public URL to save to database:
     const { data: urlData } = supabase.storage
       .from("uploads")
       .getPublicUrl(filePath);
-    console.log("Data from public URL:" + urlData.publicUrl);
 
     if (error) {
       console.error(error);
@@ -37,14 +39,17 @@ exports.uploadPost = async (req, res) => {
         fileSize: file.size,
         mimeType: file.mimetype,
         path: urlData.publicUrl,
+        folderId: folderId,
         userId: req.user.id,
       },
     });
 
-    // redirect on successful upload
+    if (folderId) {
+      return res.redirect(`/folders/${folderId}`);
+    }
     res.redirect("/dashboard");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.redirect("/upload");
   }
 };
