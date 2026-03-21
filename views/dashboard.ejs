@@ -53,7 +53,7 @@
       <% } else { %>
         <div class="folders-grid">
           <% folders.forEach(function(folder) { %>
-            <div class="folder-card">
+            <div class="folder-card" onclick="window.location='/folders/<%= folder.id %>'">
               <div class="folder-card-icon">
                 <span class="material-icons">folder</span>
               </div>
@@ -62,7 +62,7 @@
                 <%= new Date(folder.createdAt).toLocaleDateString() %>
               </div>
               <div class="folder-card-actions">
-                <a href="/folders/<%= folder.id %>" class="icon-btn" title="Open">
+                <a href="/folders/<%= folder.id %>" class="icon-btn" title="Open in new tab" target="_blank">
                   <span class="material-icons">open_in_new</span>
                 </a>
                 <a href="/folders/<%= folder.id %>/edit" class="icon-btn" title="Rename">
