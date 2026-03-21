@@ -116,7 +116,7 @@
         <strong>Delete this file</strong>
         <p>This will permanently remove the file from storage and cannot be undone.</p>
       </div>
-      <form action="/files/<%= file.id %>/delete" method="POST" style="margin: 0;">
+      <form action="/<%= file.id %>/delete" class="delete-form" method="POST" style="margin: 0;">
         <button type="submit" class="btn btn-danger">
           <span class="material-icons" style="font-size:16px">delete</span>
           Delete File

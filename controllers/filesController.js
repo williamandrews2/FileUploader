@@ -76,7 +76,7 @@ exports.fileDetailsGet = async (req, res) => {
   }
 };
 
-// download a file
+// download a file (opens in a new tab to download from there)
 exports.fileDownload = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -91,4 +91,27 @@ exports.fileDownload = async (req, res) => {
 };
 
 // POST delete a file
-exports.fileDelete = (req, res) => {};
+exports.fileDelete = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    const file = await prisma.file.findUnique({
+      where: { id: id },
+    });
+    const storedName = file.storedName;
+
+    // delete from supabase storage first
+    await supabase.storage.from("uploads").remove([storedName]);
+
+    // delete from prisma second
+    await prisma.file.delete({
+      where: { id: id },
+    });
+
+    // TODO: add a delete confirmation here:
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.error(error);
+    res.redirect("/dashboard");
+  }
+};
