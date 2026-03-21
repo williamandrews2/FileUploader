@@ -13,7 +13,7 @@ exports.dashboardGet = async (req, res) => {
     });
 
     res.render("dashboard", {
-      title: "dashboard",
+      title: "Dashboard",
       folders,
       files,
       user: req.user,

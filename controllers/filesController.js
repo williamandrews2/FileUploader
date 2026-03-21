@@ -82,10 +82,29 @@ exports.fileDetailsGet = async (req, res) => {
 exports.fileDownload = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
+
     const file = await prisma.file.findUnique({
       where: { id: id },
     });
-    res.redirect(file.path);
+
+    // download the file from Supabase as a buffer
+    const { data, error } = await supabase.storage
+      .from("uploads")
+      .download(file.storedName);
+
+    if (error) throw error;
+
+    // convert to buffer
+    const buffer = Buffer.from(await data.arrayBuffer());
+
+    // set headers to force download
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${file.fileName}"`,
+    );
+    res.setHeader("Content-Type", file.mimeType);
+
+    res.send(buffer);
   } catch (error) {
     console.error(error);
     res.redirect(`/${parseInt(req.params.id)}/details`);
