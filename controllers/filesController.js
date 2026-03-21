@@ -83,7 +83,6 @@ exports.fileDownload = async (req, res) => {
     const file = await prisma.file.findUnique({
       where: { id: id },
     });
-    console.log(file.path);
     res.redirect(file.path);
   } catch (error) {
     console.error(error);
