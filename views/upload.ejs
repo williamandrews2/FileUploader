@@ -48,6 +48,7 @@
 </div>
 
 <script>
+  // alert for when user attempts to click upload without selecting a file first
   document.querySelector("form").addEventListener("submit", (e) => {
     const fileInput = document.getElementById("fileInput");
     if (!fileInput || fileInput.files.length === 0) {
@@ -55,4 +56,35 @@
       alert("Please select a file before uploading!");
     }
   });
+
+  // drop zone event listener for dragging and dropping files to upload
+  const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault(); // required to allow dropping
+      dropZone.style.borderColor = 'var(--accent)';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.style.borderColor = '';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files; // assign dropped file to the input
+        dropZone.querySelector('p').textContent = files[0].name; // show filename
+        dropZone.style.borderColor = 'var(--success)';
+      }
+    });
+
+    // show the file name when uploading by clicking "browse"
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        dropZone.querySelector('p').textContent = fileInput.files[0].name;
+        dropZone.style.borderColor = 'var(--success)';
+      }
+    })
 </script>
