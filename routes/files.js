@@ -28,4 +28,7 @@ filesRouter.get("/:id/download", isAuthenticated, filesController.fileDownload);
 // POST delete a file
 filesRouter.post("/:id/delete", isAuthenticated, filesController.fileDelete);
 
+// POST update file parent folder
+filesRouter.post("/:id/move", isAuthenticated, filesController.fileMovePost);
+
 module.exports = filesRouter;

@@ -60,8 +60,8 @@
     <!-- Details -->
     <div class="details-card">
       <div class="details-card-header">
-        <span class="material-icons">info</span>
-        <span>File Information</span>
+      <span class="material-icons">info</span>
+      <span class="section-title">File Information</span>
       </div>
 
       <div class="detail-row">
@@ -105,16 +105,46 @@
           <%= new Date(file.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
         </span>
       </div>
-
-      <div class="detail-row">
-        <span class="detail-label">Storage URL</span>
-        <span class="detail-value" style="font-size: 0.75rem;">
-          <a href="<%= file.path %>" target="_blank" style="color: var(--accent); text-decoration: none;">
-            View in Supabase
-          </a>
-        </span>
-      </div>
     </div>
+
+    <!-- Move to folder -->
+<div class="details-card" style="margin-top: 1.25rem;">
+  <div class="details-card-header">
+    <span class="material-icons">drive_file_move</span>
+    <span class="section-title">Move to Folder</span>
+  </div>
+  <div style="padding: 1.25rem 1.5rem;">
+    <form action="/<%= file.id %>/move" method="POST" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+      <div class="input-wrap" style="flex: 1; min-width: 200px;">
+        <select name="folderId" style="
+          width: 100%;
+          padding: 0.7rem 0.9rem 0.7rem 2.6rem;
+          background: var(--bg-elevated);
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          color: var(--text-primary);
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.95rem;
+          outline: none;
+          appearance: none;
+          cursor: pointer;
+        ">
+          <option value="">— No folder (root level) —</option>
+          <% folders.forEach(function(folder) { %>
+            <option value="<%= folder.id %>" <%= file.folderId === folder.id ? 'selected' : '' %> >
+              <%= folder.name %>
+            </option>
+          <% }) %>
+        </select>
+        <span class="material-icons input-icon">folder</span>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <span class="material-icons" style="font-size:16px">drive_file_move</span>
+        Move
+      </button>
+    </form>
+  </div>
+</div>
 
     <!-- Delete section -->
     <div class="delete-section">

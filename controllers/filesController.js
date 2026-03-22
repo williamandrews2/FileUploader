@@ -70,8 +70,18 @@ exports.fileDetailsGet = async (req, res) => {
       return res.redirect("/dashboard");
     }
 
+    // find all folders that belong to the user
+    const folders = await prisma.folder.findMany({
+      where: { userId: user.id },
+    });
+
     // render the page with file details
-    res.render("fileDetails", { file, user: user, title: "File Details" });
+    res.render("fileDetails", {
+      file,
+      folders,
+      user: user,
+      title: "File Details",
+    });
   } catch (error) {
     console.error(error);
     res.redirect("/dashboard");
@@ -130,6 +140,26 @@ exports.fileDelete = async (req, res) => {
     });
 
     res.redirect("/dashboard");
+  } catch (error) {
+    console.error(error);
+    res.redirect("/dashboard");
+  }
+};
+
+exports.fileMovePost = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    // check for a valid folder id or move to root
+    const folderId = req.body.folderId ? parseInt(req.body.folderId) : null;
+
+    // update in the db
+    await prisma.file.update({
+      where: { id },
+      data: { folderId },
+    });
+
+    res.redirect(`/${id}/details`);
   } catch (error) {
     console.error(error);
     res.redirect("/dashboard");
