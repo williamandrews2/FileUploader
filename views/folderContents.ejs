@@ -68,7 +68,8 @@
       <% } else { %>
         <div class="files-list">
           <% files.forEach(function(file) { %>
-            <div class="file-row" onclick="window.location='/<%= file.id %>/details'">
+            <div class="file-row">
+              <a href="/<%= file.id %>/details" class="file-row-link"></a>
               <div class="file-row-icon">
                 <%
                   const mime = file.mimeType || '';
