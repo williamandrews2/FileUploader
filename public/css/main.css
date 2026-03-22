@@ -865,6 +865,7 @@ input.valid {
     transform 0.2s,
     box-shadow 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
 .folder-card:hover {
@@ -904,10 +905,18 @@ input.valid {
   font-family: "Space Mono", monospace;
 }
 
+.folder-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 .folder-card-actions {
   display: flex;
   gap: 0.5rem;
   margin-top: auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Icon buttons ── */
@@ -984,6 +993,7 @@ input.valid {
   border-radius: 10px;
   transition: border-color 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
 .file-row:hover {
@@ -1028,10 +1038,18 @@ input.valid {
   margin-top: 2px;
 }
 
+.file-row-link {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 .file-row-actions {
   display: flex;
   gap: 0.5rem;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Dashboard divider ── */

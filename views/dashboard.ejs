@@ -53,8 +53,9 @@
       <% } else { %>
         <div class="folders-grid">
           <% folders.forEach(function(folder) { %>
-            <div class="folder-card" onclick="window.location='/folders/<%= folder.id %>'">
-              <div class="folder-card-icon">
+            <div class="folder-card">
+              <a href="/folders/<%= folder.id %>" class="folder-card-link"></a>
+                <div class="folder-card-icon">
                 <span class="material-icons">folder</span>
               </div>
               <div class="folder-card-name"><%= folder.name %></div>
@@ -69,11 +70,12 @@
                   <span class="material-icons">edit</span>
                 </a>
                 <form action="/folders/<%= folder.id %>/delete" class="delete-form" method="POST" style="margin:0;">
-                  <button type="submit" class="icon-btn danger" title="Delete" onclick="event.stopPropagation()">
+                  <button type="submit" class="icon-btn danger" title="Delete">
                     <span class="material-icons">delete</span>
                   </button>
                 </form>
               </div>
+              
             </div>
           <% }) %>
         </div>
@@ -104,7 +106,8 @@
       <% } else { %>
         <div class="files-list">
           <% files.forEach(function(file) { %>
-            <div class="file-row" onclick="window.location='/<%= file.id %>/details'">
+            <div class="file-row">
+              <a href="/<%= file.id %>/details" class="file-row-link"></a>
               <div class="file-row-icon">
                 <%
                   const mime = file.mimeType || '';
@@ -132,7 +135,7 @@
                   <span class="material-icons">download</span>
                 </a>
                 <form action="/<%= file.id %>/delete" class="delete-form" method="POST" style="margin:0;">
-                  <button type="submit" class="icon-btn danger" title="Delete" onclick="event.stopPropagation()">
+                  <button type="submit" class="icon-btn danger" title="Delete" >
                     <span class="material-icons">delete</span>
                   </button>
                 </form>
