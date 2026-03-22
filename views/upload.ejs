@@ -9,6 +9,14 @@
         >
         Upload a file
       </h3>
+
+      <% if (locals.error) { %>
+       <div class="alert-error">
+       <span class="material-icons">error_outline</span>
+       <%= error %>
+       </div>
+      <% } %>
+
       <!-- multipart.form-data is required for multer to receive the file! -->
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <div

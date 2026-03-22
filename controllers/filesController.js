@@ -6,6 +6,7 @@ exports.uploadGet = (req, res) => {
   res.render("upload", {
     title: "Upload",
     folderId: req.query.folderId || null,
+    error: req.flash("uploadError")[0] || null,
   });
 };
 

@@ -2,7 +2,8 @@ const { Router } = require("express");
 const filesRouter = Router();
 const filesController = require("../controllers/filesController");
 const { isAuthenticated } = require("../middleware/auth");
-const upload = require("../middleware/upload");
+const upload = require("../middleware/multerMiddleware");
+const handleUpload = require("../middleware/multerMiddleware");
 
 // GET upload a file
 filesRouter.get("/upload", isAuthenticated, filesController.uploadGet);
@@ -11,7 +12,7 @@ filesRouter.get("/upload", isAuthenticated, filesController.uploadGet);
 filesRouter.post(
   "/upload",
   isAuthenticated,
-  upload.single("file"),
+  handleUpload,
   filesController.uploadPost,
 );
 
