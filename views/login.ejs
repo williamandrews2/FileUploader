@@ -9,10 +9,10 @@
         <p>Sign in to access your files</p>
       </div>
 
-      <% if (messages && messages.error) { %>
+      <% if (messages && messages.length > 0) { %>
         <div class="alert-error">
-          <span class="material-icons">error_outline</span>
-          <%= messages.error %>
+        <span class="material-icons">error_outline</span>
+       <%= messages[0] %>
         </div>
       <% } %>
 
