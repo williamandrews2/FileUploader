@@ -2,7 +2,7 @@
 
 A full stack personal cloud file storage application built with Node.js, Express, and Supabase. Users can register, log in, upload files, organize them into folders, and manage everything from a clean dashboard. The website is live [here](https://vaultdrive.up.railway.app/).
 
-![VaultDrive Dashboard](/FileUploader/images/vaultdrivedashboard.png)
+![VaultDrive Dashboard](images/vaultdrivedashboard.png)
 
 ## Features
 
